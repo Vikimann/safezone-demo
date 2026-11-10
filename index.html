@@ -91,6 +91,44 @@
     L.marker([49.4771, 10.9887])
       .addTo(map)
       .bindPopup("Fürth – Pilotstadt");
-  </script>
+ 
+    // SAFEZONE: Amtliche Nürnberger Bezirksgrenzen
+    fetch("safezone_nuernberg_87_bezirke.geojson")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Bezirksdatei nicht gefunden");
+        }
+        return response.json();
+      })
+      .then(data => {
+        const bezirke = L.geoJSON(data, {
+          style: {
+            color: "#1769aa",
+            weight: 2,
+            fillColor: "#45a3e5",
+            fillOpacity: 0.12
+          },
+          onEachFeature: (feature, layer) => {
+            const props = feature.properties || {};
+
+            const name =
+              props.NAME ||
+              props.BEZ_NAME ||
+              props.BEZIRK ||
+              props.name ||
+              "Statistischer Bezirk";
+
+            layer.bindPopup(
+              "<strong>" + String(name).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") + "</strong><br>" +
+              "Nürnberg<br>" +
+              "Keine kleinräumigen Kriminalitätsdaten hinterlegt."
+            );
+          }
+        }).addTo(map);
+      })
+      .catch(error => {
+        console.error("SAFEZONE:", error);
+      });
+ </script>
 </body>
 </html>
