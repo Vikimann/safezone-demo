@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAFEZONE – Nürnberg & Fürth</title>
+
+  <link rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fa;
+      color: #14263d;
+    }
+    header {
+      background: #14263d;
+      color: white;
+      padding: 20px;
+    }
+    h1 { margin: 0; }
+    main { padding: 12px; }
+    #map {
+      height: 65vh;
+      min-height: 350px;
+      border-radius: 12px;
+    }
+    .info {
+      background: white;
+      padding: 16px;
+      margin-top: 12px;
+      border-radius: 12px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>SAFEZONE</h1>
+    <p>Pilotregion Nürnberg–Fürth</p>
+  </header>
+
+  <main>
+    <div id="map"></div>
+
+    <div class="info">
+      <h2>Unsere Pilotregion</h2>
+      <p>Städte: Nürnberg und Fürth</p>
+      <p>
+        Die amtlichen Bezirksgrenzen
+        werden als Nächstes eingebunden.
+      </p>
+      <p>
+        Noch keine kleinräumigen
+        Kriminalitätsdaten verfügbar.
+        Es werden keine Werte geschätzt.
+      </p>
+      <small>
+        SAFEZONE-Prototyp.
+        Keine offizielle Polizei-App.
+      </small>
+    </div>
+  </main>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+  <script>
+    const map = L.map("map").setView(
+      [49.46, 11.03], 12
+    );
+
+    L.tileLayer(
+      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        maxZoom: 19,
+        attribution:
+          '&copy; OpenStreetMap-Mitwirkende'
+      }
+    ).addTo(map);
+
+    L.marker([49.4521, 11.0767])
+      .addTo(map)
+      .bindPopup("Nürnberg – Pilotstadt");
+
+    L.marker([49.4771, 10.9887])
+      .addTo(map)
+      .bindPopup("Fürth – Pilotstadt");
+  </script>
+</body>
+</html>
