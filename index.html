@@ -45,6 +45,7 @@
   </header>
 
   <main>
+    <input id="bezirkSuche" type="search" placeholder="Nürnberger Bezirk suchen" aria-label="Nürnberger Bezirk suchen" style="width:100%;padding:12px;margin-bottom:12px;font-size:16px;border:1px solid #aaa;border-radius:8px;">
     <div id="map"></div>
 
     <div class="info">
@@ -125,6 +126,33 @@
             );
           }
         }).addTo(map);
+       
+        const suche = document.getElementById("bezirkSuche");
+
+        suche.addEventListener("input", () => {
+          const eingabe = suche.value.trim().toLocaleLowerCase("de");
+
+          if (!eingabe) return;
+
+          let treffer = null;
+
+          bezirke.eachLayer(layer => {
+            const p = layer.feature.properties || {};
+            const name = String(
+              p.NAME || p.BEZ_NAME || p.BEZIRK || p.name || ""
+            );
+
+            if (!treffer && name.toLocaleLowerCase("de").includes(eingabe)) {
+              treffer = layer;
+            }
+          });
+
+          if (treffer) {
+            map.fitBounds(treffer.getBounds(), { maxZoom: 15 });
+            treffer.openPopup();
+          }
+        });
+ 
       })
       .catch(error => {
         console.error("SAFEZONE:", error);
