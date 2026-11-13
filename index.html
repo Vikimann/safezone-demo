@@ -46,6 +46,7 @@
 
   <main>
     <input id="bezirkSuche" type="search" placeholder="Nürnberger Bezirk suchen" aria-label="Nürnberger Bezirk suchen" style="width:100%;padding:12px;margin-bottom:12px;font-size:16px;border:1px solid #aaa;border-radius:8px;">
+    <p id="suchHinweis" aria-live="polite"></p>
     <div id="map"></div>
 <div class="info">
   <strong>🗺️ Kartenlegende</strong>
@@ -155,7 +156,8 @@ Bezirke Nürnbergs sind auf der Karte dargestellt.
             map.fitBounds(treffer.getBounds(), { maxZoom: 15 });
             treffer.openPopup();
           } else {
-}
+document.getElementById("suchHinweis").textContent = "Kein passender Bezirk gefunden.";
+           } 
         });
  
       })
