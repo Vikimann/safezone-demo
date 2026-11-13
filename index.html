@@ -153,6 +153,7 @@ Bezirke Nürnbergs sind auf der Karte dargestellt.
           });
 
           if (treffer) {
+            document.getElementById("suchHinweis").textContent = "";
             map.fitBounds(treffer.getBounds(), { maxZoom: 15 });
             treffer.openPopup();
           } else {
